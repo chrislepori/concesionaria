@@ -1,0 +1,30 @@
+package com.tech.concesionaria.repository;
+
+import com.tech.concesionaria.domain.Automovil;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AutomovilRepository extends JpaRepository<Automovil, Long> {
+
+
+    //void createAutomovil(Automovil automovil); //preguntar porque si lo pongo rompre
+
+    Automovil findByPatente(String patente);
+    /*
+    SELECT * FROM automovil WHERE patente = ?;
+     */
+
+    Automovil findFirstByOrderByPesoDesc();
+
+    /*
+    esto hace el OrderByPesoDesc:
+    SELECT *
+    FROM automovil
+    ORDER BY peso DESC
+    LIMIT 1;
+    esto hace el findFirst:
+    encuentra el primer elemento de la lista ordenado por peso
+     */
+
+}
