@@ -4,13 +4,12 @@ import com.tech.concesionaria.domain.Automovil;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AutomovilRepository extends JpaRepository<Automovil, Long> {
 
-
-    //void createAutomovil(Automovil automovil); //preguntar porque si lo pongo rompre
-
-    Automovil findByPatente(String patente);
+    Optional<Automovil> findByPatente(String patente);
     /*
     SELECT * FROM automovil WHERE patente = ?;
      */

@@ -5,6 +5,8 @@ import com.tech.concesionaria.repository.AutomovilRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -12,24 +14,22 @@ public class AutomovilService {
 
     private final AutomovilRepository automovilRepository;
 
-    public Automovil findByPatente(String patente){
+    private Optional<Automovil> findByPatente(String patente){
         return automovilRepository.findByPatente(patente);
     }
 
     public void createAutomovil(Automovil automovil){
-        Automovil auto = findByPatente(automovil.getPatente());
-        if(auto != null){
+        Optional<Automovil> auto = findByPatente(automovil.getPatente());//optional es un rapper ayuda a no caer el null pointer y evital el nul
+        if(auto.isPresent()){
             throw new IllegalArgumentException("El auto ya existe");
         }
         automovilRepository.save(automovil);
     }
 
     public void eliminarAutomovil(String patente){
-        Automovil auto = findByPatente(patente);
-        if(auto != null){
-            automovilRepository.delete(auto);
-        }
-        throw new IllegalArgumentException("No se encontró el automovil");
+        Automovil auto = findByPatente(patente)
+                .orElseThrow(()-> new IllegalArgumentException("No se encontró el automovil")); //igual a create, usa el Optional pero de otro modo. Usa lamda
+        automovilRepository.delete(auto);
 
     }
 
