@@ -1,37 +1,32 @@
 package com.tech.concesionaria.service;
 
-import com.tech.concesionaria.domain.Automovil;
 import com.tech.concesionaria.domain.Sensor;
+import com.tech.concesionaria.exception.ApiException;
+import com.tech.concesionaria.exception.Error;
+import com.tech.concesionaria.repository.AutomovilRepository;
 import com.tech.concesionaria.repository.SensorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.tech.concesionaria.exception.Error.SENSOR_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
 public class SensorService {
 
     private final SensorRepository sensorRepository;
+    private final AutomovilRepository automovilRepository;
 
 
-    public void createSensor(Sensor s){
-        sensorRepository.save(s);
+    public Sensor updateSensor(Sensor s) {
+        return sensorRepository.save(s);
     }
 
-    public void eliminarSensor(Long id){
-        Sensor s = sensorRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("No se encontró el sensor"));
+    public void eliminarSensor(int numero) {
+        Sensor s = sensorRepository.findByNumero(numero)
+                .orElseThrow(() -> new ApiException(SENSOR_NOT_FOUND));
         sensorRepository.delete(s);
     }
 
-    public float agregarAutomovil(Long sensorId, Automovil automovil) {
-        Sensor sensor = sensorRepository.findById(sensorId)
-                .orElseThrow(() -> new IllegalArgumentException("Sensor no encontrado"));
 
-        float costo = sensor.procesarVehiculoRetornarImporte(automovil);
-
-        // Actualizar el sensor en la base de datos
-        sensorRepository.save(sensor); // Esto asegura que se persista el nuevo automóvil
-
-        return costo;
-    }
 }

@@ -10,9 +10,6 @@ import java.util.Optional;
 public interface AutomovilRepository extends JpaRepository<Automovil, Long> {
 
     Optional<Automovil> findByPatente(String patente);
-    /*
-    SELECT * FROM automovil WHERE patente = ?;
-     */
 
     Automovil findFirstByOrderByPesoDesc();
 

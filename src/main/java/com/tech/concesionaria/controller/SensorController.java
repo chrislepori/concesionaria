@@ -17,20 +17,15 @@ public class SensorController {
 
     @PostMapping
     public ResponseEntity<Void> createSensor(@RequestBody Sensor s){
-        sensorService.createSensor(s);
+        sensorService.updateSensor(s);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarSensor(@PathVariable Long id){
-        sensorService.eliminarSensor(id);
+    @DeleteMapping("/{numero}")
+    public ResponseEntity<Void> eliminarSensor(@PathVariable int numero){
+        sensorService.eliminarSensor(numero);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Float> agregarAutomovil(@PathVariable Long id, @RequestBody Automovil automovil) {
-        float costo = sensorService.agregarAutomovil(id, automovil);
-        return ResponseEntity.ok(costo); // Devuelve el costo calculado del automóvil
-    }
 }

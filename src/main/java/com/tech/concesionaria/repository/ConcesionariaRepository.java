@@ -1,13 +1,15 @@
 package com.tech.concesionaria.repository;
 
-import com.tech.concesionaria.domain.Sensor;
+import com.tech.concesionaria.domain.Concesionaria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface SensorRepository extends JpaRepository<Sensor, Long> {
-    Optional<Sensor> findByNumero(int numero);
+public interface ConcesionariaRepository extends JpaRepository<Concesionaria, Long> {
+
+    Optional<Concesionaria> findByName(String name);
+
 
 }
